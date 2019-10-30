@@ -35,14 +35,24 @@
 				<a class="btn" href="#">Take Assessment</a>
 			</li>
 		</ul>
+
+		<button v-on:click="showModal = true">Show Modal</button>
+
+		<Modal v-if="showModal" :content="modalContent"/>
 	</div><!-- /.welcome -->
 </template>
 
 <script>
+import Modal from '@/components/Modal.vue';
 
 export default {
 	name: 'Welcome',
+	data: () => ({
+		showModal: false,
+		modalContent: 'Hello'
+	}),
 	components: {
+		Modal
 	}
 }
 </script>
