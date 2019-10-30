@@ -1,0 +1,53 @@
+/* ------------------------------------------------------------ *\
+	Form Elements
+\* ------------------------------------------------------------ */
+
+input,
+select,
+textarea,
+button {
+	border: none;
+	width: 100%;
+	background: none;
+	background-color: transparent;
+	box-shadow: none;
+	appearance: none;
+	border: none;
+	font: inherit;
+	resize: none;
+}
+
+button {
+	width: auto; 
+}
+
+input::placeholder {
+	color: inherit;
+	opacity: 1;
+}
+
+textarea::placeholder {
+	color: inherit;
+	opacity: 1;
+}
+
+input:-webkit-autofill {
+	-webkit-text-fill-color: inherit;
+	-webkit-box-shadow: 0 0 0 1000px #fff inset;
+}
+
+::-ms-clear {
+    display: none;
+}
+
+.textarea {
+}
+
+.select {
+}
+
+.radio {
+}
+
+.checkbox {
+}

@@ -1,0 +1,38 @@
+/* ------------------------------------------------------------ *\
+	Variables
+\* ------------------------------------------------------------ */
+
+$font-family-sans-serif: Arial, Helvetica, sans-serif;
+$font-family-serif: Times, 'Times New Roman', serif;
+
+$font-size-base: 16px;
+$line-height-base: 1.3;
+
+$shell-max-width: 1300px;
+$shell-gutter: 20px;
+
+$responsive-xxs: 374px;
+$responsive-xs: 767px;
+$responsive-sm: 1023px;
+$responsive-md: 1200px;
+
+$mobile-small: '(max-width: #{$responsive-xxs}) ';
+$mobile: '(max-width: #{$responsive-xs}) ';
+$tablet-portrait: '(max-width: #{$responsive-sm}) ';
+$small-desktop: '(max-width: #{$responsive-md}) ';
+$retina: '(min-resolution: 2dppx) ';
+
+$black: #000;
+$white: #fff;
+$red: #FF3E1D;
+
+$padding-xs: 50px;
+$padding-sm: 100px;
+$padding-md: 150px;
+$padding-lg: 200px;
+
+// Usage
+// @media #{$mobile-small}
+// @media #{$mobile}
+// @media #{$tablet}portrait}
+// @media #{$small-desktop}
