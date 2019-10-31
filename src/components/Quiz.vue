@@ -20,7 +20,7 @@
 			<QuizStart v-on:closeModal="closeModal" v-on:showModal="showModal" v-if="quizStart"/>
 
 			<div class="quiz__questions" v-if="quizQuestions">
-				<Question v-for="question in activeQuestions" v-bind:key="question.question" v-on:quizPrev="quizPrev" v-on:quizNext="quizNext">
+				<!-- <Question v-for="question in activeQuestions" v-bind:key="question.question" v-on:quizPrev="quizPrev" v-on:quizNext="quizNext">
 					<template v-slot:title>
 						{{question.title}}
 					</template>
@@ -35,6 +35,24 @@
 				
 					<template v-slot:answer3>
 						{{question.answer3}}
+					</template>
+				</Question> -->
+
+				<Question v-on:quizPrev="quizPrev" v-on:quizNext="quizNext">
+					<template v-slot:title>
+						{{activeQuestion.title}}
+					</template>
+				
+					<template v-slot:answer1>
+						{{activeQuestion.answer1}}
+					</template>
+				
+					<template v-slot:answer2>
+						{{activeQuestion.answer2}}
+					</template>
+				
+					<template v-slot:answer3>
+						{{activeQuestion.answer3}}
 					</template>
 				</Question>
 			</div><!-- /.quiz__questions -->
@@ -130,23 +148,26 @@ export default {
 			this.questions[0].isActive = true;
 		},
 		quizPrev: function() {
-			console.log('quizPrev')
+			const activeIndex = this.questions.indexOf(this.activeQuestion);
+			const prevIndex = activeIndex - 1;
+			if (prevIndex > -1) {
+				this.questions[activeIndex].isActive = false;
+				this.questions[prevIndex].isActive = true;
+			}
 		},
 		quizNext: function() {
-			console.log('quizNext')
-			this.activeQuestions[0].indexOf;
-			this.questions.filter(function (question) {
-				question.isActive.index;
-			})
-			// this.activeQuestions[0].isActive = false;
-
+			const activeIndex = this.questions.indexOf(this.activeQuestion);
+			const nextIndex = activeIndex + 1;
+			if (nextIndex < this.questions.length) {
+				this.questions[activeIndex].isActive = false;
+				this.questions[nextIndex].isActive = true;
+			}
 		}
 	},
 	computed: {
-		activeQuestions: function () {
-			return this.questions.filter(function (question) {
-				return question.isActive;
-			})
+		activeQuestion: function() {
+			const index = this.questions.findIndex(question => question.isActive);
+			return this.questions[index];
 		}
 	}
 }
@@ -165,7 +186,6 @@ export default {
 			margin-left: 20px; 
 		}
 	}
-
 }
 
 .question {
