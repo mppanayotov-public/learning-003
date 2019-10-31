@@ -3,12 +3,19 @@
 		<div class="modal-mask">
 			<div class="modal-wrapper">
 				<div class="modal-container">
-
 					<div class="modal-header">
+						<a href="#" v-on:click="closeModal" class="modal-close">
+							<svg xmlns="http://www.w3.org/2000/svg" width="12.93" height="12.93" viewBox="0 0 12.93 12.93">
+							  <g id="Group_5_Copy" data-name="Group 5 Copy" transform="translate(6.465 -4.849) rotate(45)">
+							    <rect id="Rectangle_7" data-name="Rectangle 7" width="2.286" height="16" transform="translate(6.857)" fill="#a3aaad"/>
+							    <rect id="Rectangle_3" data-name="Rectangle 3" width="16" height="2.286" transform="translate(0 6.857)" fill="#a3aaad"/>
+							  </g>
+							</svg>
+						</a>
 					</div>
 
 					<div class="modal-body">
-						{{ modalContent }}
+						<slot name="content"></slot>	
 					</div>
 
 					<div class="modal-footer">
@@ -37,7 +44,7 @@ export default {
 	name: 'Modal',
 	components: {
 	},
-	template: "#modal-template",
+	template: '#modal-template',
 	props: ['content'],
 	data: function() {
 		return {
@@ -45,6 +52,9 @@ export default {
 		};
 	},
 	methods: {
+		closeModal: function() {
+			this.$emit('closeModal');
+		}
 	}
 }
 </script>
@@ -68,7 +78,9 @@ export default {
 }
 
 .modal-container {
-	width: 300px;
+	/*width: 300px;*/
+	width: 100%; 
+	max-width: 618px; 
 	margin: 0px auto;
 	padding: 20px 30px;
 	background-color: #fff;
@@ -76,6 +88,10 @@ export default {
 	box-shadow: 0 2px 8px rgba(0, 0, 0, .33);
 	transition: all .3s ease;
 	font-family: Helvetica, Arial, sans-serif;
+}
+
+.modal-header {
+	display: flex; 
 }
 
 .modal-header h3 {
@@ -89,6 +105,10 @@ export default {
 
 .modal-default-button {
 	float: right;
+}
+
+.modal-close {
+	margin-left: auto; 
 }
 
 /*

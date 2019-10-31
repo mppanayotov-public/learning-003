@@ -30,4 +30,6 @@ export default {
 @import 'assets/css/form-elements.scss';
 @import 'assets/css/shadow.scss';
 @import 'assets/css/btn.scss';
+@import 'assets/css/wrapper.scss';
+@import 'assets/css/box.scss';
 </style>

@@ -16,7 +16,7 @@
 					Previous Score: 45%
 				</div><!-- /.stats -->
 
-				<a class="btn" href="#">Take Assessment</a>
+				<router-link class="btn" to="/quiz">Take Assessment</router-link>
 			</li>
 			
 			<li>
@@ -32,28 +32,16 @@
 					Previous Score: 45%
 				</div><!-- /.stats -->
 
-				<a class="btn" href="#">Take Assessment</a>
+				<router-link class="btn" to="/quiz">Take Assessment</router-link>
 			</li>
 		</ul>
-
-		<button v-on:click="showModal = true">Show Modal</button>
-
-		<Modal v-if="showModal" :content="modalContent"/>
 	</div><!-- /.welcome -->
 </template>
 
 <script>
-import Modal from '@/components/Modal.vue';
 
-export default {
+export default { 
 	name: 'Welcome',
-	data: () => ({
-		showModal: false,
-		modalContent: 'Hello'
-	}),
-	components: {
-		Modal
-	}
 }
 </script>
 
@@ -93,17 +81,18 @@ export default {
 				pointer-events: all;
 			}
 		} 
+		
+		.btn {
+			margin-top: 30px; 
+			pointer-events: none;
+			opacity: 0; 
+		}
 	}
 
 	li + li {
 		margin-left: 38px; 
 	}
 
-	.btn {
-		margin-top: 30px; 
-		pointer-events: none;
-		opacity: 0; 
-	}
 
 	.stats {
 		color: #2049E6;
