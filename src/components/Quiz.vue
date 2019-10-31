@@ -17,28 +17,26 @@
 		</div><!-- /.quiz__header -->
 
 		<div class="quiz__main">
-			<QuizStart v-on:closeModal="closeModal" v-on:showModal="showModal"/>
+			<QuizStart v-on:closeModal="closeModal" v-on:showModal="showModal" v-if="quizStart"/>
 
-			<div class="quiz__questions">
-				<div v-for="question in questions">
-					<Question>
-						<template v-slot:title>
-							{{question.title}}
-						</template>
-					
-						<template v-slot:answer1>
-							{{question.answer1}}
-						</template>
-
-						<template v-slot:answer2>
-							{{question.answer2}}
-						</template>
-
-						<template v-slot:answer3>
-							{{question.answer3}}
-						</template>
-					</Question>
-				</div>
+			<div class="quiz__questions" v-if="quizQuestions">
+				<Question v-for="question in questions" v-bind:key="question.question">
+					<template v-slot:title>
+						{{question.title}}
+					</template>
+				
+					<template v-slot:answer1>
+						{{question.answer1}}
+					</template>
+				
+					<template v-slot:answer2>
+						{{question.answer2}}
+					</template>
+				
+					<template v-slot:answer3>
+						{{question.answer3}}
+					</template>
+				</Question>
 			</div><!-- /.quiz__questions -->
 		</div><!-- /.quiz__main -->
 
@@ -82,9 +80,9 @@
 							<input type="text" class="field" placeholder="Access Code">
 							
 							<div class="form__actions">
-								<button class="form__btn btn" v-on:click="quizProceed">Cancel</button>
+								<button class="form__btn btn" v-on:click="closeModal">Cancel</button>
 
-								<button class="form__btn btn" v-on:click="quizProceed">Start</button>
+								<button class="form__btn btn" v-on:click="quizInit">Start</button>
 							</div><!-- /.form__actions -->
 						</form>
 					</div><!-- /.form -->
@@ -103,6 +101,8 @@ export default {
 	name: 'Quiz',
 	data: () => ({
 		modalVisible: false,
+		quizStart: true,
+		quizQuestions: false,
 		questions: [
 			{ title: 'Question 1', answer1: 'Answer1-1', answer2: 'Answer1-2', answer3: 'Answer1-3'},
 			{ title: 'Question 2', answer1: 'Answer2-1', answer2: 'Answer2-2', answer3: 'Answer2-3'},
@@ -123,8 +123,10 @@ export default {
 		closeModal: function() {
 			this.modalVisible = false;
 		},
-		quizProceed: function() {
+		quizInit: function() {
 			this.closeModal();
+			this.quizStart = false;
+			this.quizQuestions = true;
 		}
 	},
 	computed: {

@@ -1,12 +1,23 @@
 <template>
 	<div>
-		<slot name="title"></slot>
+		<h2>
+			<slot name="title"></slot>
+		</h2>
 
-		<slot name="answer1"></slot>
+		<label>
+			<input class="radio" type="radio" v-bind:value="1" v-model="answer" />
+			<slot name="answer1"></slot>
+		</label>
 
-		<slot name="answer2"></slot>
+		<label>
+			<input class="radio" type="radio" v-bind:value="2" v-model="answer" />
+			<slot name="answer2"></slot>
+		</label>
 
-		<slot name="answer3"></slot>
+		<label>
+			<input class="radio" type="radio" v-bind:value="3" v-model="answer" />
+			<slot name="answer3"></slot>
+		</label>
 	</div>
 </template>
 
@@ -14,6 +25,7 @@
 export default {
 	name: 'Question',
 	data: () => ({
+		answer: "",
 	}),
 	components: {
 	},
@@ -24,4 +36,8 @@ export default {
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped lang="scss">
+	input,
+	label {
+		cursor: pointer;
+	}
 </style>
