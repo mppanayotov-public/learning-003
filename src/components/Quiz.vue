@@ -17,10 +17,12 @@
 		</div><!-- /.quiz__header -->
 
 		<div class="quiz__main">
-			<QuizStart/>
+			<QuizStart v-on:closeModal="closeModal" v-on:showModal="showModal"/>
+
+			<QuizQuestion1/>
 		</div><!-- /.quiz__main -->
 
-		<Modal v-if="modalVisible">
+		<Modal v-if="modalVisible" v-on:closeModal="closeModal" v-on:showModal="showModal">
 			<template v-slot:content>
 				<div class="modal-content">
 					<svg id="Lock_Icon" data-name="Lock Icon" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="106" height="106" viewBox="0 0 106 106">
@@ -60,9 +62,9 @@
 							<input type="text" class="field" placeholder="Access Code">
 							
 							<div class="form__actions">
-								<button class="form__btn btn" v-on:click="modalVisible = false">Cancel</button>
+								<button class="form__btn btn" v-on:click="quizProceed">Cancel</button>
 
-								<button class="form__btn btn" v-on:click="modalVisible = false">Start</button>
+								<button class="form__btn btn" v-on:click="quizProceed">Start</button>
 							</div><!-- /.form__actions -->
 						</form>
 					</div><!-- /.form -->
@@ -75,6 +77,7 @@
 <script>
 import Modal from '@/components/Modal.vue';
 import QuizStart from '@/components/QuizStart.vue';
+import QuizQuestion1 from '@/components/QuizQuestion1.vue';
 
 export default {
 	name: 'Quiz',
@@ -84,13 +87,17 @@ export default {
 	components: {
 		Modal,
 		QuizStart,
+		QuizQuestion1,
 	},
 	methods: {
 		showModal: function() {
 			this.modalVisible = true;
 		},
 		closeModal: function() {
-			this.modalVisible = true;
+			this.modalVisible = false;
+		},
+		quizProceed: function() {
+			this.closeModal();
 		}
 	}
 }
