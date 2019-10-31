@@ -20,29 +20,25 @@
 			<QuizStart v-on:closeModal="closeModal" v-on:showModal="showModal"/>
 
 			<div class="quiz__questions">
-				<keep-alive>
+				<div v-for="question in questions">
 					<Question>
 						<template v-slot:title>
-							Title1
+							{{question.title}}
+						</template>
+					
+						<template v-slot:answer1>
+							{{question.answer1}}
 						</template>
 
-						<template v-slot:answer1>
-							Answer1
+						<template v-slot:answer2>
+							{{question.answer2}}
+						</template>
+
+						<template v-slot:answer3>
+							{{question.answer3}}
 						</template>
 					</Question>
-				</keep-alive>
-
-				<keep-alive>
-					<Question>
-						<template v-slot:title>
-							Title2
-						</template>
-
-						<template v-slot:answer1>
-							Answer2
-						</template>
-					</Question>
-				</keep-alive>
+				</div>
 			</div><!-- /.quiz__questions -->
 		</div><!-- /.quiz__main -->
 
@@ -107,6 +103,13 @@ export default {
 	name: 'Quiz',
 	data: () => ({
 		modalVisible: false,
+		questions: [
+			{ title: 'Question 1', answer1: 'Answer1-1', answer2: 'Answer1-2', answer3: 'Answer1-3'},
+			{ title: 'Question 2', answer1: 'Answer2-1', answer2: 'Answer2-2', answer3: 'Answer2-3'},
+			{ title: 'Question 3', answer1: 'Answer3-1', answer2: 'Answer3-2', answer3: 'Answer3-3'},
+			{ title: 'Question 4', answer1: 'Answer4-1', answer2: 'Answer4-2', answer3: 'Answer4-3'},
+			{ title: 'Question 5', answer1: 'Answer5-1', answer2: 'Answer5-2', answer3: 'Answer5-3'},
+		]
 	}),
 	components: {
 		Modal,
