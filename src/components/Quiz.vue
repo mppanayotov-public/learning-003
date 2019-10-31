@@ -17,18 +17,10 @@
 		</div><!-- /.quiz__header -->
 
 		<div class="quiz__main">
-			<div class="box">
-				<p>Here are some instructions before you begin. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident.</p>
-			
-				<p style="color:red">Warning about cheating irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
-			
-				<p style="text-align: right;">
-					<button class="btn" v-on:click="showModal = true">Begin Assessment</button>
-				</p>
-			</div><!-- /.box -->
+			<QuizStart/>
 		</div><!-- /.quiz__main -->
 
-		<Modal v-if="showModal" :content="modalContent" v-on:closeModal="showModal = false">
+		<Modal v-if="modalVisible">
 			<template v-slot:content>
 				<div class="modal-content">
 					<svg id="Lock_Icon" data-name="Lock Icon" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="106" height="106" viewBox="0 0 106 106">
@@ -68,9 +60,9 @@
 							<input type="text" class="field" placeholder="Access Code">
 							
 							<div class="form__actions">
-								<button class="form__btn btn" v-on:click="showModal = false">Cancel</button>
+								<button class="form__btn btn" v-on:click="modalVisible = false">Cancel</button>
 
-								<button class="form__btn btn" v-on:click="showModal = false">Start</button>
+								<button class="form__btn btn" v-on:click="modalVisible = false">Start</button>
 							</div><!-- /.form__actions -->
 						</form>
 					</div><!-- /.form -->
@@ -82,20 +74,24 @@
 
 <script>
 import Modal from '@/components/Modal.vue';
+import QuizStart from '@/components/QuizStart.vue';
 
 export default {
 	name: 'Quiz',
 	data: () => ({
-		showModal: false,
-		modalContent: 'Hello',
-		text : {
-			text: 'Hello'
-		}
+		modalVisible: false,
 	}),
 	components: {
-		Modal
+		Modal,
+		QuizStart,
 	},
 	methods: {
+		showModal: function() {
+			this.modalVisible = true;
+		},
+		closeModal: function() {
+			this.modalVisible = true;
+		}
 	}
 }
 </script>
