@@ -19,7 +19,31 @@
 		<div class="quiz__main">
 			<QuizStart v-on:closeModal="closeModal" v-on:showModal="showModal"/>
 
-			<QuizQuestion1/>
+			<div class="quiz__questions">
+				<keep-alive>
+					<Question>
+						<template v-slot:title>
+							Title1
+						</template>
+
+						<template v-slot:answer1>
+							Answer1
+						</template>
+					</Question>
+				</keep-alive>
+
+				<keep-alive>
+					<Question>
+						<template v-slot:title>
+							Title2
+						</template>
+
+						<template v-slot:answer1>
+							Answer2
+						</template>
+					</Question>
+				</keep-alive>
+			</div><!-- /.quiz__questions -->
 		</div><!-- /.quiz__main -->
 
 		<Modal v-if="modalVisible" v-on:closeModal="closeModal" v-on:showModal="showModal">
@@ -77,7 +101,7 @@
 <script>
 import Modal from '@/components/Modal.vue';
 import QuizStart from '@/components/QuizStart.vue';
-import QuizQuestion1 from '@/components/QuizQuestion1.vue';
+import Question from '@/components/Question.vue';
 
 export default {
 	name: 'Quiz',
@@ -87,7 +111,7 @@ export default {
 	components: {
 		Modal,
 		QuizStart,
-		QuizQuestion1,
+		Question,
 	},
 	methods: {
 		showModal: function() {
@@ -99,6 +123,8 @@ export default {
 		quizProceed: function() {
 			this.closeModal();
 		}
+	},
+	computed: {
 	}
 }
 </script>
