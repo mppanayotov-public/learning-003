@@ -20,7 +20,7 @@
 			<QuizStart v-on:closeModal="closeModal" v-on:showModal="showModal" v-if="quizStart"/>
 
 			<div class="quiz__questions" v-if="quizQuestions">
-				<Question v-for="question in questions" v-bind:key="question.question">
+				<Question v-for="question in activeQuestions" v-bind:key="question.question" v-on:quizPrev="quizPrev" v-on:quizNext="quizNext">
 					<template v-slot:title>
 						{{question.title}}
 					</template>
@@ -104,11 +104,11 @@ export default {
 		quizStart: true,
 		quizQuestions: false,
 		questions: [
-			{ title: 'Question 1', answer1: 'Answer1-1', answer2: 'Answer1-2', answer3: 'Answer1-3'},
-			{ title: 'Question 2', answer1: 'Answer2-1', answer2: 'Answer2-2', answer3: 'Answer2-3'},
-			{ title: 'Question 3', answer1: 'Answer3-1', answer2: 'Answer3-2', answer3: 'Answer3-3'},
-			{ title: 'Question 4', answer1: 'Answer4-1', answer2: 'Answer4-2', answer3: 'Answer4-3'},
-			{ title: 'Question 5', answer1: 'Answer5-1', answer2: 'Answer5-2', answer3: 'Answer5-3'},
+			{ title: 'Question 1', answer1: 'Answer1-1', answer2: 'Answer1-2', answer3: 'Answer1-3', state: '', isActive: false},
+			{ title: 'Question 2', answer1: 'Answer2-1', answer2: 'Answer2-2', answer3: 'Answer2-3', state: '', isActive: false},
+			{ title: 'Question 3', answer1: 'Answer3-1', answer2: 'Answer3-2', answer3: 'Answer3-3', state: '', isActive: false},
+			{ title: 'Question 4', answer1: 'Answer4-1', answer2: 'Answer4-2', answer3: 'Answer4-3', state: '', isActive: false},
+			{ title: 'Question 5', answer1: 'Answer5-1', answer2: 'Answer5-2', answer3: 'Answer5-3', state: '', isActive: false},
 		]
 	}),
 	components: {
@@ -127,9 +127,27 @@ export default {
 			this.closeModal();
 			this.quizStart = false;
 			this.quizQuestions = true;
+			this.questions[0].isActive = true;
+		},
+		quizPrev: function() {
+			console.log('quizPrev')
+		},
+		quizNext: function() {
+			console.log('quizNext')
+			this.activeQuestions[0].indexOf;
+			this.questions.filter(function (question) {
+				question.isActive.index;
+			})
+			// this.activeQuestions[0].isActive = false;
+
 		}
 	},
 	computed: {
+		activeQuestions: function () {
+			return this.questions.filter(function (question) {
+				return question.isActive;
+			})
+		}
 	}
 }
 </script>
@@ -148,6 +166,9 @@ export default {
 		}
 	}
 
+}
+
+.question {
 }
 
 .modal-content {

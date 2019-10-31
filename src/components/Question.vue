@@ -1,23 +1,31 @@
 <template>
-	<div>
+	<div class="question">
 		<h2>
 			<slot name="title"></slot>
 		</h2>
 
-		<label>
-			<input class="radio" type="radio" v-bind:value="1" v-model="answer" />
-			<slot name="answer1"></slot>
-		</label>
+		<div class="question__content">
+			<label>
+				<input class="radio" type="radio" v-bind:value="1" v-model="answer" />
+				<slot name="answer1"></slot>
+			</label>
+			
+			<label>
+				<input class="radio" type="radio" v-bind:value="2" v-model="answer" />
+				<slot name="answer2"></slot>
+			</label>
+			
+			<label>
+				<input class="radio" type="radio" v-bind:value="3" v-model="answer" />
+				<slot name="answer3"></slot>
+			</label>
+		</div><!-- /.question__content -->
 
-		<label>
-			<input class="radio" type="radio" v-bind:value="2" v-model="answer" />
-			<slot name="answer2"></slot>
-		</label>
+		<div class="question__actions">
+			<button class="btn" v-on:click="quizPrev">Previous question</button>
 
-		<label>
-			<input class="radio" type="radio" v-bind:value="3" v-model="answer" />
-			<slot name="answer3"></slot>
-		</label>
+			<button class="btn" v-on:click="quizNext">Next question</button>
+		</div><!-- /.question__actions -->
 	</div>
 </template>
 
@@ -30,6 +38,12 @@ export default {
 	components: {
 	},
 	methods: {
+		quizPrev: function() {
+			this.$emit('quizPrev');
+		},
+		quizNext: function() {
+			this.$emit('quizNext');
+		}
 	}
 }
 </script>
@@ -39,5 +53,21 @@ export default {
 	input,
 	label {
 		cursor: pointer;
+	}
+
+	.question {
+		.question__content {
+			margin-top: 40px; 
+		}
+
+		.question__actions {
+			margin-top: 40px; 
+			display: flex; 
+			justify-content: center;
+		}
+
+		.btn + .btn {
+			margin-left: 20px; 
+		}
 	}
 </style>
