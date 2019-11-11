@@ -1,10 +1,10 @@
-<template>
+<template v-if="modalOn">
 	<transition name="modal">
 		<div class="modal-mask">
 			<div class="modal-wrapper">
 				<div class="modal-container">
 					<div class="modal-header">
-						<a href="#" v-on:click="closeModal" class="modal-close">
+						<a href="#" v-on:click="store.dispatch('closeModal')" class="modal-close">
 							<svg xmlns="http://www.w3.org/2000/svg" width="12.93" height="12.93" viewBox="0 0 12.93 12.93">
 							  <g id="Group_5_Copy" data-name="Group 5 Copy" transform="translate(6.465 -4.849) rotate(45)">
 							    <rect id="Rectangle_7" data-name="Rectangle 7" width="2.286" height="16" transform="translate(6.857)" fill="#a3aaad"/>
@@ -26,19 +26,6 @@
 	</transition>
 </template>
 
-<!-- app -->
-<!-- <div id="app"> -->
-	<!-- <button id="show-modal" v-on="showModal = true">Show Modal</button> -->
-	<!-- use the modal component, pass in the prop -->
-	<!-- <modal v-if="showModal" v-onclose="showModal = false"> -->
-		<!--
-			you can use custom content here to overwrite
-			default content
-		-->
-		<!-- <h3 slot="header">custom header</h3> -->
-	<!-- </modal> -->
-<!-- </div> -->
-
 <script>
 export default {
 	name: 'Modal',
@@ -52,9 +39,6 @@ export default {
 		};
 	},
 	methods: {
-		closeModal: function() {
-			this.$emit('closeModal');
-		}
 	}
 }
 </script>

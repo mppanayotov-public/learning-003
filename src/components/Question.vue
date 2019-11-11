@@ -5,6 +5,7 @@
 		</h2>
 
 		<div class="question__content">
+			<!-- USE V-FOR -->
 			<label>
 				<input class="radio" type="radio" v-bind:value="1" v-model="answer" />
 				<slot name="answer1"></slot>
@@ -32,6 +33,9 @@
 <script>
 export default {
 	name: 'Question',
+	prop: {
+
+	},
 	data: () => ({
 		answer: "",
 	}),
@@ -48,7 +52,6 @@ export default {
 }
 </script>
 
-<!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped lang="scss">
 	input,
 	label {

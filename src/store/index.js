@@ -4,12 +4,24 @@ import Vuex from 'vuex'
 Vue.use(Vuex)
 
 export default new Vuex.Store({
-  state: {
-  },
-  mutations: {
-  },
-  actions: {
-  },
-  modules: {
-  }
+	state: {
+		isModalVisible: false,
+	},
+	mutations: {
+		// showModal(isModalVisible) {
+		// 	this.isModalVisible = true;
+		// },
+		// closeModal(isModalVisible) {
+		// 	this.isModalVisible = false;
+		// },
+	},
+	actions: {
+		// closeModal (context) {
+		// 	context.commit('closeModal')
+		// },
+	},
+	modules: {
+	},
+	computed: {
+	}
 })

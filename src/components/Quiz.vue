@@ -17,7 +17,7 @@
 		</div><!-- /.quiz__header -->
 
 		<div class="quiz__main">
-			<QuizStart v-on:closeModal="closeModal" v-on:showModal="showModal" v-if="quizStart"/>
+			<QuizStart v-if="quizStart"/>
 
 			<div class="quiz__questions" v-if="quizQuestions">
 				<!-- <Question v-for="question in activeQuestions" v-bind:key="question.question" v-on:quizPrev="quizPrev" v-on:quizNext="quizNext">
@@ -38,7 +38,8 @@
 					</template>
 				</Question> -->
 
-				<Question v-on:quizPrev="quizPrev" v-on:quizNext="quizNext">
+				<!-- Use Prop -->
+				<Question v-on:quizPrev="quizPrev" v-on:quizNext="quizNext" :questionData="activeQuestion">
 					<template v-slot:title>
 						{{activeQuestion.title}}
 					</template>
@@ -58,7 +59,7 @@
 			</div><!-- /.quiz__questions -->
 		</div><!-- /.quiz__main -->
 
-		<Modal v-if="modalVisible" v-on:closeModal="closeModal" v-on:showModal="showModal">
+		<Modal>
 			<template v-slot:content>
 				<div class="modal-content">
 					<svg id="Lock_Icon" data-name="Lock Icon" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="106" height="106" viewBox="0 0 106 106">
@@ -98,9 +99,9 @@
 							<input type="text" class="field" placeholder="Access Code">
 							
 							<div class="form__actions">
-								<button class="form__btn btn" v-on:click="closeModal">Cancel</button>
+								<button class="form__btn btn">Cancel</button>
 
-								<button class="form__btn btn" v-on:click="quizInit">Start</button>
+								<button class="form__btn btn">Start</button>
 							</div><!-- /.form__actions -->
 						</form>
 					</div><!-- /.form -->
@@ -118,7 +119,6 @@ import Question from '@/components/Question.vue';
 export default {
 	name: 'Quiz',
 	data: () => ({
-		modalVisible: false,
 		quizStart: true,
 		quizQuestions: false,
 		questions: [
@@ -135,17 +135,10 @@ export default {
 		Question,
 	},
 	methods: {
-		showModal: function() {
-			this.modalVisible = true;
-		},
-		closeModal: function() {
-			this.modalVisible = false;
-		},
 		quizInit: function() {
-			this.closeModal();
+			closeModal();
 			this.quizStart = false;
 			this.quizQuestions = true;
-			this.questions[0].isActive = true;
 		},
 		quizPrev: function() {
 			const activeIndex = this.questions.indexOf(this.activeQuestion);
@@ -168,7 +161,13 @@ export default {
 		activeQuestion: function() {
 			const index = this.questions.findIndex(question => question.isActive);
 			return this.questions[index];
+		},
+		modalOn: function() {
+			return this.$store.state.isModalVisible
 		}
+	},
+	mounted() {
+		this.questions[0].isActive = true;
 	}
 }
 </script>
