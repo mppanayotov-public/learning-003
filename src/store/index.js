@@ -7,21 +7,29 @@ export default new Vuex.Store({
 	state: {
 		isModalVisible: false,
 	},
-	mutations: {
-		// showModal(isModalVisible) {
-		// 	this.isModalVisible = true;
-		// },
-		// closeModal(isModalVisible) {
-		// 	this.isModalVisible = false;
-		// },
-	},
-	actions: {
-		// closeModal (context) {
-		// 	context.commit('closeModal')
-		// },
-	},
 	modules: {
 	},
-	computed: {
+	getters: {
+		modalState: state => {
+			return state.isModalVisible; 
+		}
+	},
+	mutations: {
+		closeModal: state => {
+			state.isModalVisible = false;
+			console.log('state.isModalVisible', state.isModalVisible)
+		},
+		openModal: state => {
+			state.isModalVisible = true;
+			console.log('state.isModalVisible', state.isModalVisible)
+		}
+	},
+	actions: {
+		closeModal: ({ commit }) => {
+			commit('closeModal');
+		},
+		openModal: ({ commit }) => {
+			commit('openModal');
+		}
 	}
 })

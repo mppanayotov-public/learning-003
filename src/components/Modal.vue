@@ -1,10 +1,10 @@
-<template v-if="modalOn">
+<template>
 	<transition name="modal">
 		<div class="modal-mask">
 			<div class="modal-wrapper">
 				<div class="modal-container">
 					<div class="modal-header">
-						<a href="#" v-on:click="store.dispatch('closeModal')" class="modal-close">
+						<a href="#" v-on:click="closeModal" class="modal-close">
 							<svg xmlns="http://www.w3.org/2000/svg" width="12.93" height="12.93" viewBox="0 0 12.93 12.93">
 							  <g id="Group_5_Copy" data-name="Group 5 Copy" transform="translate(6.465 -4.849) rotate(45)">
 							    <rect id="Rectangle_7" data-name="Rectangle 7" width="2.286" height="16" transform="translate(6.857)" fill="#a3aaad"/>
@@ -27,6 +27,9 @@
 </template>
 
 <script>
+import { mapGetters } from 'vuex';
+import { mapActions } from 'vuex';
+
 export default {
 	name: 'Modal',
 	components: {
@@ -35,11 +38,20 @@ export default {
 	props: ['content'],
 	data: function() {
 		return {
-			modalContent: this.content
+			modalContent: this.content,
 		};
 	},
 	methods: {
-	}
+		...mapActions ([
+			'closeModal',
+			'openModal'
+		])
+	},
+	computed: {
+		...mapGetters ([
+			'modalState'
+		])
+	} 
 }
 </script>
 
