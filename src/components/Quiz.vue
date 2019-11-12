@@ -1,46 +1,5 @@
 <template>
 	<div class="quiz">
-		<div class="quiz__header">
-			<div class=" cols">
-				<div class="box box--big">
-					<div class="progress">
-						Assessment Progress
-					</div><!-- /.progress -->
-				</div><!-- /.box -->
-			
-				<div class="box">
-					<div class="timer">
-						Time Remaining
-					</div><!-- /.progress -->
-				</div><!-- /.box -->
-			</div><!-- /.cols -->
-		</div><!-- /.quiz__header -->
-
-		<div class="quiz__main">
-			<QuizStart v-if="quizStart"/>
-
-			<div class="quiz__questions" v-if="quizQuestions">
-				<!-- Use Prop -->
-				<Question v-on:quizPrev="quizPrev" v-on:quizNext="quizNext" :questionData="activeQuestion">
-					<template v-slot:title>
-						{{activeQuestion.title}}
-					</template>
-				
-					<template v-slot:answer1>
-						{{activeQuestion.answer1}}
-					</template>
-				
-					<template v-slot:answer2>
-						{{activeQuestion.answer2}}
-					</template>
-				
-					<template v-slot:answer3>
-						{{activeQuestion.answer3}}
-					</template>
-				</Question>
-			</div><!-- /.quiz__questions -->
-		</div><!-- /.quiz__main -->
-
 		<Modal v-if="modalState">
 			<template v-slot:content>
 				<div class="modal-content">
@@ -92,10 +51,40 @@
 				</div><!-- /.modal-content -->
 			</template>
 		</Modal>
+
+		<div class="quiz__header">
+			<div class=" cols">
+				<div class="box box--big">
+					<div class="progress">
+						Assessment Progress
+					</div><!-- /.progress -->
+				</div><!-- /.box -->
+			
+				<div class="box">
+					<div class="timer">
+						Time Remaining
+					</div><!-- /.progress -->
+				</div><!-- /.box -->
+			</div><!-- /.cols -->
+		</div><!-- /.quiz__header -->
+
+		<div class="quiz__main">
+			<QuizStart v-if="quizStart"/>
+
+			<div class="quiz__questions" v-if="quizQuestions">
+				<!-- Use Prop -->
+				<!-- <Question v-on:quizPrev="quizPrev" v-on:quizNext="quizNext" :questionData="activeQuestion" v-bind:questions="questions"> -->
+				<Question v-on:quizPrev="quizPrev" v-on:quizNext="quizNext" v-bind:answers="answers">
+				</Question>
+			</div><!-- /.quiz__questions -->
+		</div><!-- /.quiz__main -->
+
+		
 	</div><!-- /.quiz -->
 </template>
 
 <script>
+import axios from 'axios';
 import { mapGetters } from 'vuex';
 import { mapActions } from 'vuex';
 import Modal from '@/components/Modal.vue';
@@ -107,13 +96,7 @@ export default {
 	data: () => ({
 		quizStart: true,
 		quizQuestions: false,
-		questions: [
-			{ title: 'Question 1', answer1: 'Answer1-1', answer2: 'Answer1-2', answer3: 'Answer1-3', state: '', isActive: false},
-			{ title: 'Question 2', answer1: 'Answer2-1', answer2: 'Answer2-2', answer3: 'Answer2-3', state: '', isActive: false},
-			{ title: 'Question 3', answer1: 'Answer3-1', answer2: 'Answer3-2', answer3: 'Answer3-3', state: '', isActive: false},
-			{ title: 'Question 4', answer1: 'Answer4-1', answer2: 'Answer4-2', answer3: 'Answer4-3', state: '', isActive: false},
-			{ title: 'Question 5', answer1: 'Answer5-1', answer2: 'Answer5-2', answer3: 'Answer5-3', state: '', isActive: false},
-		]
+		questions: null,
 	}),
 	components: {
 		Modal,
@@ -151,13 +134,20 @@ export default {
 		...mapGetters ([
 			'modalState'
 		]),
-		activeQuestion: function() {
-			const index = this.questions.findIndex(question => question.isActive);
-			return this.questions[index];
-		},
+		// activeQuestion: function() {
+		// 	const index = this.questions.findIndex(question => question.isActive);
+		// 	return this.questions[index];
+		// },
 	},
 	mounted() {
-		this.questions[0].isActive = true;
+		axios
+			// .get('src/assets/questions.json')
+			.get('https://api.coindesk.com/v1/bpi/currentprice.json')
+			.then(response => {
+				this.questions = response.data.bpi
+			})
+
+		// this.questions[0].isActive = true;
 	}
 }
 </script>

@@ -6,19 +6,8 @@
 
 		<div class="question__content">
 			<!-- USE V-FOR -->
-			<label>
+			<label v-for="answer in answers">
 				<input class="radio" type="radio" v-bind:value="1" v-model="answer" />
-				<slot name="answer1"></slot>
-			</label>
-			
-			<label>
-				<input class="radio" type="radio" v-bind:value="2" v-model="answer" />
-				<slot name="answer2"></slot>
-			</label>
-			
-			<label>
-				<input class="radio" type="radio" v-bind:value="3" v-model="answer" />
-				<slot name="answer3"></slot>
 			</label>
 		</div><!-- /.question__content -->
 
@@ -33,9 +22,7 @@
 <script>
 export default {
 	name: 'Question',
-	prop: {
-
-	},
+	props: ["answers"],
 	data: () => ({
 		answer: "",
 	}),
