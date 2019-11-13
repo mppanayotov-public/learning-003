@@ -141,10 +141,12 @@ export default {
 	},
 	mounted() {
 		axios
-			// .get('src/assets/questions.json')
-			.get('https://api.coindesk.com/v1/bpi/currentprice.json')
+			.get('src/assets/questions.json')
+			// .get('https://api.coindesk.com/v1/bpi/currentprice.json')
 			.then(response => {
 				this.questions = response.data.bpi
+				
+console.log('this.questions', this.questions)
 			})
 
 		// this.questions[0].isActive = true;

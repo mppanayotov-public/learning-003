@@ -7,7 +7,7 @@
 		<div class="question__content">
 			<!-- USE V-FOR -->
 			<label v-for="answer in answers">
-				<input class="radio" type="radio" v-bind:value="1" v-model="answer" />
+				<input class="radio" type="radio" />
 			</label>
 		</div><!-- /.question__content -->
 
@@ -24,7 +24,7 @@ export default {
 	name: 'Question',
 	props: ["answers"],
 	data: () => ({
-		answer: "",
+		answers: this.answers,
 	}),
 	components: {
 	},
