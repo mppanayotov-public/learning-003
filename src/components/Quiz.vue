@@ -90,6 +90,7 @@ import { mapActions } from 'vuex';
 import Modal from '@/components/Modal.vue';
 import QuizStart from '@/components/QuizStart.vue';
 import Question from '@/components/Question.vue';
+require('@/assets/questions.json');
 
 export default {
 	name: 'Quiz',
@@ -141,12 +142,10 @@ export default {
 	},
 	mounted() {
 		axios
-			.get('src/assets/questions.json')
+			.get('@/assets/questions.json')
 			// .get('https://api.coindesk.com/v1/bpi/currentprice.json')
 			.then(response => {
 				this.questions = response.data.bpi
-				
-console.log('this.questions', this.questions)
 			})
 
 		// this.questions[0].isActive = true;
