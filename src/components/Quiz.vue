@@ -151,6 +151,10 @@ export default {
 			.get('https://raw.githubusercontent.com/mppanayotov-public/learning-003/master/src/assets/questions.json')
 			.then(response => {
 				this.questions = response.data.questions
+
+
+				console.log('response.data', response.data)
+				console.log('response.data.questions', response.data.questions)
 		})
 
 
