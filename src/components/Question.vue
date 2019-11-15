@@ -29,10 +29,6 @@ export default {
 	data: () => ({
 		chosenAnswer: "",
 	}),
-	computed: {
-	},
-	components: {
-	},
 	methods: {
 		quizPrev: function() {
 			this.$emit('quizPrev');

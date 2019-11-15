@@ -74,10 +74,7 @@
 			<div class="quiz__questions" v-if="quizQuestions">
 				<!-- Use Prop -->
 
-				<!-- <Question v-on:quizPrev="quizPrev" v-on:quizNext="quizNext" :questionData="activeQuestion"> -->
-
-				<Question v-on:quizPrev="quizPrev" v-on:quizNext="quizNext" v-bind:answers="answers">
-				</Question>
+				<Question v-on:quizPrev="quizPrev" v-on:quizNext="quizNext" v-bind:answers="answers"></Question>
 			</div><!-- /.quiz__questions -->
 		</div><!-- /.quiz__main -->
 
@@ -114,6 +111,7 @@ export default {
 			this.closeModal();
 			this.quizStart = false;
 			this.quizQuestions = true;
+			console.table(this.questions);
 		},
 		quizPrev: function() {
 			const activeIndex = this.questions.indexOf(this.activeQuestion);
@@ -122,14 +120,18 @@ export default {
 				this.questions[activeIndex].isActive = false;
 				this.questions[prevIndex].isActive = true;
 			}
+			console.table(this.questions);
 		},
 		quizNext: function() {
 			const activeIndex = this.questions.indexOf(this.activeQuestion);
 			const nextIndex = activeIndex + 1;
 			if (nextIndex < this.questions.length) {
+				
 				this.questions[activeIndex].isActive = false;
 				this.questions[nextIndex].isActive = true;
 			}
+			console.table(this.questions);
+			// console.log('this.questions[activeIndex]', this.questions[activeIndex])
 		}
 	},
 	computed: {
