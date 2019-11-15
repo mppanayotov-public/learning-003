@@ -135,18 +135,24 @@ export default {
 		...mapGetters ([
 			'modalState'
 		]),
-		// activeQuestion: function() {
-		// 	const index = this.questions.findIndex(question => question.isActive);
-		// 	return this.questions[index];
-		// },
+		answers: function() {
+
+			console.log('this.questions', this.questions)
+			console.log('this.questions.answers', this.questions.answers)
+			return this.questions.answers;
+		},
+		activeQuestion: function() {
+			const index = this.questions.findIndex(question => question.isActive);
+			return this.questions[index];
+		},
 	},
 	mounted() {
 		axios
-			.get('@/assets/questions.json')
-			// .get('https://api.coindesk.com/v1/bpi/currentprice.json')
+			.get('https://raw.githubusercontent.com/mppanayotov-public/learning-003/master/src/assets/questions.json')
 			.then(response => {
-				this.questions = response.data.bpi
-			})
+				this.questions = response.data.questions
+		})
+
 
 		// this.questions[0].isActive = true;
 	}
