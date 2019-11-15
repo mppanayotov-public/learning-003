@@ -76,8 +76,8 @@
 
 				<!-- <Question v-on:quizPrev="quizPrev" v-on:quizNext="quizNext" :questionData="activeQuestion"> -->
 
-				<!-- <Question v-on:quizPrev="quizPrev" v-on:quizNext="quizNext" v-bind:answers="answers">
-				</Question> -->
+				<Question v-on:quizPrev="quizPrev" v-on:quizNext="quizNext" v-bind:answers="answers">
+				</Question>
 			</div><!-- /.quiz__questions -->
 		</div><!-- /.quiz__main -->
 
@@ -98,7 +98,7 @@ export default {
 	data: () => ({
 		quizStart: true,
 		quizQuestions: false,
-		questions: null,
+		questions: [],
 	}),
 	components: {
 		Modal,
@@ -141,6 +141,8 @@ export default {
 			return this.questions[index];
 		},
 		answers: function() {
+			console.log('this.activeQuestion', this.activeQuestion)
+			console.log('this.activeQuestion.answers', this.activeQuestion.answers)
 			return this.activeQuestion.answers;
 		},
 	},
@@ -148,16 +150,17 @@ export default {
 		axios
 			.get('https://raw.githubusercontent.com/mppanayotov-public/learning-003/master/src/assets/questions.json')
 			.then(res => {
-				console.log('res', res);
 				const data = res.data;
 				console.log('data', data);
 
 				for (let key in data) {
-					console.log(key);
+					this.questions.push(data[key]);
+					this.questions[key].isActive = false;
 				}
+				
+				this.questions[0].isActive = true;
+				console.log('this.questions', this.questions);
 		})
-
-		// this.questions[0].isActive = true;
 	}
 }
 </script>

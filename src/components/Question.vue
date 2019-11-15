@@ -6,9 +6,12 @@
 
 		<div class="question__content">
 			<!-- USE V-FOR -->
-			<label v-for="answer in answers">
-				<input class="radio" type="radio" />
-			</label>
+			<template v-for="answer in answers">
+				<label>
+					<input class="radio" type="radio" v-bind:value="answer" v-model="chosenAnswer" />
+					{{answer}}
+				</label>
+			</template>
 		</div><!-- /.question__content -->
 
 		<div class="question__actions">
@@ -24,8 +27,10 @@ export default {
 	name: 'Question',
 	props: ["answers"],
 	data: () => ({
-		answers: this.answers,
+		chosenAnswer: "",
 	}),
+	computed: {
+	},
 	components: {
 	},
 	methods: {
