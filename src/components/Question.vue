@@ -1,10 +1,11 @@
 <template>
 	<div class="question">
 		<h2>
-			<slot name="title"></slot>
+			{{title}}
 		</h2>
 
 		<div class="question__content">
+
 			<!-- USE V-FOR -->
 			<template v-for="answer in answers">
 				<label>
@@ -25,7 +26,10 @@
 <script>
 export default {
 	name: 'Question',
-	props: ["answers"],
+	props: [
+		"title",
+		"answers"
+	],
 	data: () => ({
 		chosenAnswer: "",
 	}),

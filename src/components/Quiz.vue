@@ -74,7 +74,7 @@
 			<div class="quiz__questions" v-if="quizQuestions">
 				<!-- Use Prop -->
 
-				<Question v-on:quizPrev="quizPrev" v-on:quizNext="quizNext" v-bind:answers="answers"></Question>
+				<Question v-on:quizPrev="quizPrev" v-on:quizNext="quizNext" v-bind:title="title" v-bind:answers="answers"></Question>
 			</div><!-- /.quiz__questions -->
 		</div><!-- /.quiz__main -->
 
@@ -112,26 +112,28 @@ export default {
 			this.quizStart = false;
 			this.quizQuestions = true;
 			console.table(this.questions);
+			console.log('this.activeQuestion', this.activeQuestion);
 		},
 		quizPrev: function() {
-			const activeIndex = this.questions.indexOf(this.activeQuestion);
+			const activeIndex = this.questions.findIndex(question => question.isActive);
 			const prevIndex = activeIndex - 1;
 			if (prevIndex > -1) {
 				this.questions[activeIndex].isActive = false;
 				this.questions[prevIndex].isActive = true;
 			}
 			console.table(this.questions);
+			console.log('this.activeQuestion', this.activeQuestion);
 		},
 		quizNext: function() {
-			const activeIndex = this.questions.indexOf(this.activeQuestion);
+			const activeIndex = this.questions.findIndex(question => question.isActive);
 			const nextIndex = activeIndex + 1;
 			if (nextIndex < this.questions.length) {
-				
+
 				this.questions[activeIndex].isActive = false;
 				this.questions[nextIndex].isActive = true;
 			}
 			console.table(this.questions);
-			// console.log('this.questions[activeIndex]', this.questions[activeIndex])
+			console.log('this.activeQuestion', this.activeQuestion);
 		}
 	},
 	computed: {
@@ -142,9 +144,11 @@ export default {
 			const index = this.questions.findIndex(question => question.isActive);
 			return this.questions[index];
 		},
+		title: function() {
+			console.log('this.activeQuestion.title', this.activeQuestion.title)
+			return this.activeQuestion.title;
+		},
 		answers: function() {
-			console.log('this.activeQuestion', this.activeQuestion)
-			console.log('this.activeQuestion.answers', this.activeQuestion.answers)
 			return this.activeQuestion.answers;
 		},
 	},
@@ -153,7 +157,6 @@ export default {
 			.get('https://raw.githubusercontent.com/mppanayotov-public/learning-003/master/src/assets/questions.json')
 			.then(res => {
 				const data = res.data;
-				console.log('data', data);
 
 				for (let key in data) {
 					this.questions.push(data[key]);
@@ -161,7 +164,6 @@ export default {
 				}
 				
 				this.questions[0].isActive = true;
-				console.log('this.questions', this.questions);
 		})
 	}
 }
