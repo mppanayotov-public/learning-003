@@ -73,9 +73,11 @@
 
 			<div class="quiz__questions" v-if="quizQuestions">
 				<!-- Use Prop -->
-				<!-- <Question v-on:quizPrev="quizPrev" v-on:quizNext="quizNext" :questionData="activeQuestion" v-bind:questions="questions"> -->
-				<Question v-on:quizPrev="quizPrev" v-on:quizNext="quizNext" v-bind:answers="answers">
-				</Question>
+
+				<!-- <Question v-on:quizPrev="quizPrev" v-on:quizNext="quizNext" :questionData="activeQuestion"> -->
+
+				<!-- <Question v-on:quizPrev="quizPrev" v-on:quizNext="quizNext" v-bind:answers="answers">
+				</Question> -->
 			</div><!-- /.quiz__questions -->
 		</div><!-- /.quiz__main -->
 
@@ -90,7 +92,6 @@ import { mapActions } from 'vuex';
 import Modal from '@/components/Modal.vue';
 import QuizStart from '@/components/QuizStart.vue';
 import Question from '@/components/Question.vue';
-require('@/assets/questions.json');
 
 export default {
 	name: 'Quiz',
@@ -135,28 +136,26 @@ export default {
 		...mapGetters ([
 			'modalState'
 		]),
-		answers: function() {
-
-			console.log('this.questions', this.questions)
-			console.log('this.questions.answers', this.questions.answers)
-			return this.questions.answers;
-		},
 		activeQuestion: function() {
 			const index = this.questions.findIndex(question => question.isActive);
 			return this.questions[index];
+		},
+		answers: function() {
+			return this.activeQuestion.answers;
 		},
 	},
 	mounted() {
 		axios
 			.get('https://raw.githubusercontent.com/mppanayotov-public/learning-003/master/src/assets/questions.json')
-			.then(response => {
-				this.questions = response.data.questions
+			.then(res => {
+				console.log('res', res);
+				const data = res.data;
+				console.log('data', data);
 
-
-				console.log('response.data', response.data)
-				console.log('response.data.questions', response.data.questions)
+				for (let key in data) {
+					console.log(key);
+				}
 		})
-
 
 		// this.questions[0].isActive = true;
 	}

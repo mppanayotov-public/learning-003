@@ -1,24 +1,22 @@
-{
-	"questions": [
-		{
-			"title": "Question 1",
-			"answers": [ "Answer1-1", "Answer1-2", "Answer1-3" ]
-		},
-		{
-			"title": "Question 2",
-			"answers": [ "Answer2-1", "Answer2-2", "Answer2-3" ]
-		},
-		{
-			"title": "Question 3",
-			"answers": [ "Answer3-1", "Answer3-2", "Answer3-3" ]
-		},
-		{
-			"title": "Question 4",
-			"answers": [ "Answer4-1", "Answer4-2", "Answer4-3" ]
-		},
-		{
-			"title": "Question 5",
-			"answers": [ "Answer5-1", "Answer5-2", "Answer5-3" ]
-		}
-	]
-}
+]
+	{
+		"title": "Question 1",
+		"answers": [ "Answer1-1", "Answer1-2", "Answer1-3" ]
+	},
+	{
+		"title": "Question 2",
+		"answers": [ "Answer2-1", "Answer2-2", "Answer2-3" ]
+	},
+	{
+		"title": "Question 3",
+		"answers": [ "Answer3-1", "Answer3-2", "Answer3-3" ]
+	},
+	{
+		"title": "Question 4",
+		"answers": [ "Answer4-1", "Answer4-2", "Answer4-3" ]
+	},
+	{
+		"title": "Question 5",
+		"answers": [ "Answer5-1", "Answer5-2", "Answer5-3" ]
+	}
+]
