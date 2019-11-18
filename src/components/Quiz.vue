@@ -74,11 +74,15 @@
 			<div class="quiz__questions" v-if="quizQuestions">
 				<!-- Use Prop -->
 
-				<Question v-on:quizPrev="quizPrev" v-on:quizNext="quizNext" v-bind:title="title" v-bind:answers="answers"></Question>
+				<Question v-bind:title="title" v-bind:answers="answers" v-bind:selectedAnswer="selectedAnswer" v-on:callUpdateAnswer="updateAnswer"></Question>
+
+				<div class="question-controls">
+					<button class="btn" v-on:click="quizPrev">Previous question</button>
+
+					<button class="btn" v-on:click="quizNext">Next question</button>
+				</div><!-- /.question__actions -->
 			</div><!-- /.quiz__questions -->
 		</div><!-- /.quiz__main -->
-
-		
 	</div><!-- /.quiz -->
 </template>
 
@@ -96,6 +100,7 @@ export default {
 		quizStart: true,
 		quizQuestions: false,
 		questions: [],
+		activeQuestionUpdated: false,
 	}),
 	components: {
 		Modal,
@@ -111,30 +116,36 @@ export default {
 			this.closeModal();
 			this.quizStart = false;
 			this.quizQuestions = true;
-			console.table(this.questions);
-			console.log('this.activeQuestion', this.activeQuestion);
+			this.activeQuestionUpdated = false;
 		},
 		quizPrev: function() {
 			const activeIndex = this.questions.findIndex(question => question.isActive);
 			const prevIndex = activeIndex - 1;
+
 			if (prevIndex > -1) {
 				this.questions[activeIndex].isActive = false;
 				this.questions[prevIndex].isActive = true;
 			}
-			console.table(this.questions);
-			console.log('this.activeQuestion', this.activeQuestion);
+
+			this.activeQuestionUpdated = false;
 		},
 		quizNext: function() {
 			const activeIndex = this.questions.findIndex(question => question.isActive);
 			const nextIndex = activeIndex + 1;
+
 			if (nextIndex < this.questions.length) {
 
 				this.questions[activeIndex].isActive = false;
 				this.questions[nextIndex].isActive = true;
 			}
+
+			this.activeQuestionUpdated = false;
+		},
+		updateAnswer: function(newAnswer) {
+			this.activeQuestion.selectedAnswer = newAnswer;
 			console.table(this.questions);
-			console.log('this.activeQuestion', this.activeQuestion);
-		}
+		},
+
 	},
 	computed: {
 		...mapGetters ([
@@ -142,10 +153,17 @@ export default {
 		]),
 		activeQuestion: function() {
 			const index = this.questions.findIndex(question => question.isActive);
+			
+			if(this.activeQuestionUpdated == false) {
+				this.activeQuestionUpdated = true;
+			}
+
 			return this.questions[index];
 		},
+		selectedAnswer: function() {
+			return this.activeQuestion.selectedAnswer;
+		},
 		title: function() {
-			console.log('this.activeQuestion.title', this.activeQuestion.title)
 			return this.activeQuestion.title;
 		},
 		answers: function() {
@@ -158,11 +176,12 @@ export default {
 			.then(res => {
 				const data = res.data;
 
-				for (let key in data) {
-					this.questions.push(data[key]);
-					this.questions[key].isActive = false;
-				}
-				
+				// for (let key in data) {
+				// 	this.questions.push(data[key]);
+				// 	this.questions[key].isActive = false;
+				// }
+
+				this.questions = data;
 				this.questions[0].isActive = true;
 		})
 	}
@@ -184,7 +203,14 @@ export default {
 	}
 }
 
-.question {
+.question-controls {
+	margin-top: 40px; 
+	display: flex; 
+	justify-content: center;
+
+	.btn + .btn {
+		margin-left: 20px; 
+	}
 }
 
 .modal-content {

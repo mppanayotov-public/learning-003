@@ -7,19 +7,13 @@
 		<div class="question__content">
 
 			<!-- USE V-FOR -->
-			<template v-for="answer in answers">
+			<template v-for="answer, index in answers">
 				<label>
-					<input class="radio" type="radio" v-bind:value="answer" v-model="chosenAnswer" />
+					<input class="radio" type="radio" v-bind:value="index" v-model="answerInput" v-on:change="callUpdateAnswer" />
 					{{answer}}
 				</label>
 			</template>
 		</div><!-- /.question__content -->
-
-		<div class="question__actions">
-			<button class="btn" v-on:click="quizPrev">Previous question</button>
-
-			<button class="btn" v-on:click="quizNext">Next question</button>
-		</div><!-- /.question__actions -->
 	</div>
 </template>
 
@@ -28,18 +22,21 @@ export default {
 	name: 'Question',
 	props: [
 		"title",
-		"answers"
+		"answers",
+		"selectedAnswer",
 	],
 	data: () => ({
-		chosenAnswer: "",
+		answerInput: function() {
+			return this.selectedAnswer;
+		},
+		checkedAnswer: false,
 	}),
 	methods: {
-		quizPrev: function() {
-			this.$emit('quizPrev');
-		},
-		quizNext: function() {
-			this.$emit('quizNext');
+		callUpdateAnswer: function() {
+			this.$emit('callUpdateAnswer', this.answerInput);
 		}
+	},
+	computed: {
 	}
 }
 </script>
@@ -50,19 +47,17 @@ export default {
 		cursor: pointer;
 	}
 
+	label + label {
+		margin-left: 40px; 
+	}
+
+	.radio {
+		margin-right: 10px; 
+	}
+
 	.question {
 		.question__content {
 			margin-top: 40px; 
-		}
-
-		.question__actions {
-			margin-top: 40px; 
-			display: flex; 
-			justify-content: center;
-		}
-
-		.btn + .btn {
-			margin-left: 20px; 
 		}
 	}
 </style>

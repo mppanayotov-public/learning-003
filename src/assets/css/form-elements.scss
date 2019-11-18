@@ -2,7 +2,7 @@
 	Form Elements
 \* ------------------------------------------------------------ */
 
-input:not([type="radio"]),
+input:not([type="radio"]):not([type="checkbox"]),
 select,
 textarea,
 button {
