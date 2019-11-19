@@ -25,12 +25,12 @@ export default {
 	],
 	data: function() {
 		return {
-			answerInput: this.selectedAnswer
+			answerInput: this.selectedAnswer,
 		}	
 	},
 	methods: {
 		callUpdateAnswer: function() {
-			this.$emit('callUpdateAnswer', this.answerInput);
+			this.$emit('callUpdateSelectedAnswer', this.answerInput);
 			// console.log('this.answerInput', this.answerInput);
 		},
 	},

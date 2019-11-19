@@ -74,7 +74,7 @@
 			<div class="quiz__questions" v-if="quizQuestions">
 				<!-- Use Prop -->
 
-				<Question v-bind:title="title" v-bind:answers="answers" v-bind:selectedAnswer="selectedAnswer" v-on:callUpdateAnswer="updateAnswer"></Question>
+				<Question v-bind:title="activeQuestionTitle" v-bind:answers="activeQuestionAnswers" v-bind:selectedAnswer="activeSelectedAnswer" v-on:callUpdateSelectedAnswer="updateSelectedAnswer"></Question>
 
 				<div class="question-controls">
 					<button class="btn" v-on:click="quizPrev">Previous question</button>
@@ -100,7 +100,10 @@ export default {
 		quizStart: true,
 		quizQuestions: false,
 		questions: [],
-		activeQuestionUpdated: false,
+		activeQuestion: "",
+		activeQuestionAnswers: "",
+		activeQuestionTitle: "",
+		activeSelectedAnswer: "-1",
 	}),
 	components: {
 		Modal,
@@ -114,9 +117,12 @@ export default {
 		]),
 		quizInit: function() {
 			this.closeModal();
+			this.updateActiveQuestion();
+			this.updateTitle();
+			this.updateAnswers();
+			this.updateActiveSelectedAnswer();
 			this.quizStart = false;
 			this.quizQuestions = true;
-			this.activeQuestionUpdated = false;
 		},
 		quizPrev: function() {
 			const activeIndex = this.questions.findIndex(question => question.isActive);
@@ -126,49 +132,53 @@ export default {
 				this.questions[activeIndex].isActive = false;
 				this.questions[prevIndex].isActive = true;
 			}
-
-			this.activeQuestionUpdated = false;
+			this.updateActiveQuestion();
+			this.updateTitle();
+			this.updateAnswers();
+			this.updateActiveSelectedAnswer();
 		},
 		quizNext: function() {
 			const activeIndex = this.questions.findIndex(question => question.isActive);
 			const nextIndex = activeIndex + 1;
 
 			if (nextIndex < this.questions.length) {
-
 				this.questions[activeIndex].isActive = false;
 				this.questions[nextIndex].isActive = true;
 			}
-
-			this.activeQuestionUpdated = false;
+			this.updateActiveQuestion();
+			this.updateTitle();
+			this.updateAnswers();
+			this.updateActiveSelectedAnswer();
 		},
-		updateAnswer: function(newAnswer) {
+		updateActiveQuestion: function() {
+			const index = this.questions.findIndex(question => question.isActive);
+			
+			this.activeQuestion = this.questions[index];
+		},
+		updateActiveSelectedAnswer: function() {
+			if (this.activeQuestion.selectedAnswer) {
+				this.activeSelectedAnswer = this.activeQuestion.selectedAnswer;
+			} else {
+				this.activeSelectedAnswer = "";
+			}
+			// console.log('this.activeSelectedAnswer', this.activeSelectedAnswer)
+			// console.log('this.activeQuestion.selectedAnswer', this.activeQuestion.selectedAnswer)
+		},
+		updateTitle: function() {
+			this.activeQuestionTitle = this.activeQuestion.title;
+		},
+		updateAnswers: function() {
+			this.activeQuestionAnswers = this.activeQuestion.answers;
+		},
+		updateSelectedAnswer: function(newAnswer) {
 			this.activeQuestion.selectedAnswer = newAnswer;
-			console.table(this.questions);
+			this.updateActiveSelectedAnswer();
 		},
-
 	},
 	computed: {
 		...mapGetters ([
 			'modalState'
 		]),
-		activeQuestion: function() {
-			const index = this.questions.findIndex(question => question.isActive);
-			
-			if(this.activeQuestionUpdated == false) {
-				this.activeQuestionUpdated = true;
-			}
-
-			return this.questions[index];
-		},
-		selectedAnswer: function() {
-			return this.activeQuestion.selectedAnswer;
-		},
-		title: function() {
-			return this.activeQuestion.title;
-		},
-		answers: function() {
-			return this.activeQuestion.answers;
-		},
 	},
 	mounted() {
 		axios
