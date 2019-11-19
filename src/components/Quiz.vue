@@ -74,7 +74,7 @@
 			<div class="quiz__questions" v-if="quizQuestions">
 				<!-- Use Prop -->
 
-				<Question v-bind:title="activeQuestionTitle" v-bind:answers="activeQuestionAnswers" v-bind:selectedAnswer="activeSelectedAnswer" v-on:callUpdateSelectedAnswer="updateSelectedAnswer"></Question>
+				<Question v-bind:title="activeQuestionTitle" v-bind:answers="activeQuestionAnswers" v-bind:selectedAnswer="activeSelectedAnswer" v-on:callUpdateSelectedAnswer="updateSelectedAnswer" :key="activeQuestion.questionId"></Question>
 
 				<div class="question-controls">
 					<button class="btn" v-on:click="quizPrev">Previous question</button>
@@ -163,6 +163,7 @@ export default {
 			}
 			// console.log('this.activeSelectedAnswer', this.activeSelectedAnswer)
 			// console.log('this.activeQuestion.selectedAnswer', this.activeQuestion.selectedAnswer)
+			console.table(this.questions);
 		},
 		updateTitle: function() {
 			this.activeQuestionTitle = this.activeQuestion.title;
@@ -174,6 +175,15 @@ export default {
 			this.activeQuestion.selectedAnswer = newAnswer;
 			this.updateActiveSelectedAnswer();
 		},
+		updateQuestionsData: function() {
+			const questions = this.questions;
+
+			questions[0].isActive = true;
+
+			for (let i = 0; i < questions.length; i++) {
+				questions[i].questionId = i;
+			}
+		}
 	},
 	computed: {
 		...mapGetters ([
@@ -192,7 +202,7 @@ export default {
 				// }
 
 				this.questions = data;
-				this.questions[0].isActive = true;
+				this.updateQuestionsData();
 		})
 	}
 }
