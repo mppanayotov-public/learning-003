@@ -7,12 +7,10 @@
 		<div class="question__content">
 
 			<!-- USE V-FOR -->
-			<template v-for="answer, index in answers">
-				<label>
-					<input class="radio" type="radio" v-bind:value="index" v-model="answerInput" v-on:change="callUpdateAnswer" />
-					{{answer}}
-				</label>
-			</template>
+			<label v-for="answer, index in answers">
+				<input class="radio" type="radio" v-bind:value="index" v-model="answerInput" v-on:change="callUpdateAnswer" />
+				{{answer}}
+			</label>
 		</div><!-- /.question__content -->
 	</div>
 </template>
