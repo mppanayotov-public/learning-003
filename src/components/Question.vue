@@ -9,7 +9,6 @@
 			<!-- USE V-FOR -->
 			<template v-for="answer, index in answers">
 				<label>
-					<!-- <input class="radio" type="radio" v-bind:value="index" v-model="answerInput" v-on:change="callUpdateAnswer" /> -->
 					<input class="radio" type="radio" v-bind:value="index" v-model="answerInput" v-on:change="callUpdateAnswer" />
 					{{answer}}
 				</label>
@@ -26,23 +25,15 @@ export default {
 		"answers",
 		"selectedAnswer",
 	],
-	data: () => ({
-		answerInput: function() {
-			return this.updateAnswerInput;
-		},
-	}),
-	// model: {
-	// 	prop: 'checked',
-	// 	event: 'change'
-	// },
+	data: function() {
+		return {
+			answerInput: this.selectedAnswer
+		}	
+	},
 	methods: {
 		callUpdateAnswer: function() {
 			this.$emit('callUpdateAnswer', this.answerInput);
-			console.log('this.selectedAnswer', this.selectedAnswer);
-			console.log('this.answerInput', this.answerInput);
-		},
-		updateAnswerInput: function() {
-			return this.selectedAnswer;
+			// console.log('this.answerInput', this.answerInput);
 		},
 	},
 	computed: {
