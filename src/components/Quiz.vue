@@ -117,10 +117,7 @@ export default {
 		]),
 		quizInit: function() {
 			this.closeModal();
-			this.updateActiveQuestion();
-			this.updateTitle();
-			this.updateAnswers();
-			this.updateActiveSelectedAnswer();
+			this.updateQuestionStatus();
 			this.quizStart = false;
 			this.quizQuestions = true;
 		},
@@ -132,10 +129,7 @@ export default {
 				this.questions[activeIndex].isActive = false;
 				this.questions[prevIndex].isActive = true;
 			}
-			this.updateActiveQuestion();
-			this.updateTitle();
-			this.updateAnswers();
-			this.updateActiveSelectedAnswer();
+			this.updateQuestionStatus();
 		},
 		quizNext: function() {
 			const activeIndex = this.questions.findIndex(question => question.isActive);
@@ -145,35 +139,20 @@ export default {
 				this.questions[activeIndex].isActive = false;
 				this.questions[nextIndex].isActive = true;
 			}
-			this.updateActiveQuestion();
-			this.updateTitle();
-			this.updateAnswers();
-			this.updateActiveSelectedAnswer();
+			this.updateQuestionStatus();
 		},
-		updateActiveQuestion: function() {
+		updateQuestionStatus: function() {
 			const index = this.questions.findIndex(question => question.isActive);
 			
 			this.activeQuestion = this.questions[index];
-		},
-		updateActiveSelectedAnswer: function() {
-			if (this.activeQuestion.selectedAnswer) {
-				this.activeSelectedAnswer = this.activeQuestion.selectedAnswer;
-			} else {
-				this.activeSelectedAnswer = "";
-			}
-			// console.log('this.activeSelectedAnswer', this.activeSelectedAnswer)
-			// console.log('this.activeQuestion.selectedAnswer', this.activeQuestion.selectedAnswer)
-			console.table(this.questions);
-		},
-		updateTitle: function() {
 			this.activeQuestionTitle = this.activeQuestion.title;
-		},
-		updateAnswers: function() {
 			this.activeQuestionAnswers = this.activeQuestion.answers;
+			this.activeSelectedAnswer = this.activeQuestion.selectedAnswer;
+ 
+			console.table(this.questions);
 		},
 		updateSelectedAnswer: function(newAnswer) {
 			this.activeQuestion.selectedAnswer = newAnswer;
-			this.updateActiveSelectedAnswer();
 		},
 		updateQuestionsData: function() {
 			const questions = this.questions;

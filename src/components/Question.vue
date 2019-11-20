@@ -31,7 +31,6 @@ export default {
 	methods: {
 		callUpdateAnswer: function() {
 			this.$emit('callUpdateSelectedAnswer', this.answerInput);
-			// console.log('this.answerInput', this.answerInput);
 		},
 	},
 	computed: {
