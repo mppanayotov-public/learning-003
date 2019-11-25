@@ -1,8 +1,6 @@
 <template>
 	<div class="question">
-		<h2>
-			{{title}}
-		</h2>
+		<h2> <span class="number">{{number}}.&nbsp;</span> {{title}} </h2>
 
 		<div class="question__content">
 
@@ -19,6 +17,7 @@
 export default {
 	name: 'Question',
 	props: [
+		"number",
 		"title",
 		"answers",
 		"selectedAnswer",
@@ -45,7 +44,11 @@ export default {
 	}
 
 	label + label {
-		margin-left: 40px; 
+		margin-top: 20px; 
+	}
+
+	label {
+		display: block; 
 	}
 
 	.radio {
@@ -56,5 +59,10 @@ export default {
 		.question__content {
 			margin-top: 40px; 
 		}
+	}
+
+	.number {
+		color: #2049E6; 
+		font-weight: 500; 
 	}
 </style>

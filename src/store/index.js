@@ -26,11 +26,6 @@ export default new Vuex.Store({
 		}
 	},
 	actions: {
-		closeModal: ({ commit }) => {
-			commit('closeModal');
-		},
-		openModal: ({ commit }) => {
-			commit('openModal');
-		}
+		
 	}
 })

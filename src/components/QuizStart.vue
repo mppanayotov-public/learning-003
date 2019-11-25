@@ -12,7 +12,7 @@
 
 <script>
 import { mapGetters } from 'vuex';
-import { mapActions } from 'vuex';
+import { mapMutations } from 'vuex';
 
 export default {
 	name: 'QuizStart',
@@ -21,7 +21,7 @@ export default {
 	components: {
 	},
 	methods: {
-		...mapActions ([
+		...mapMutations ([
 			'closeModal',
 			'openModal'
 		])
@@ -36,4 +36,7 @@ export default {
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped lang="scss">
+	button {
+		margin-top: 40px; 
+	}
 </style>

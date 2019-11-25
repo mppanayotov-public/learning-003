@@ -53,10 +53,14 @@
 		</Modal>
 
 		<div class="quiz__header">
-			<div class=" cols">
+			<div class="cols">
 				<div class="box box--big">
 					<div class="progress">
 						Assessment Progress
+
+						<div class="bar-progress">
+							<div class="bar__inner js-progress"></div><!-- /.bar__inner -->
+						</div><!-- /.bar-progress -->
 					</div><!-- /.progress -->
 				</div><!-- /.box -->
 			
@@ -74,7 +78,7 @@
 			<div class="quiz__questions" v-if="quizQuestions">
 				<!-- Use Prop -->
 
-				<Question v-bind:title="activeQuestionTitle" v-bind:answers="activeQuestionAnswers" v-bind:selectedAnswer="activeSelectedAnswer" v-on:callUpdateSelectedAnswer="updateSelectedAnswer" :key="activeQuestion.questionId"></Question>
+				<Question v-bind:number="activeQuestionNumber" v-bind:title="activeQuestionTitle" v-bind:answers="activeQuestionAnswers" v-bind:selectedAnswer="activeSelectedAnswer" v-on:callUpdateSelectedAnswer="updateSelectedAnswer" :key="activeQuestion.questionId"></Question>
 
 				<div class="question-controls">
 					<button class="btn" v-on:click="quizPrev">Previous question</button>
@@ -89,7 +93,7 @@
 <script>
 import axios from 'axios';
 import { mapGetters } from 'vuex';
-import { mapActions } from 'vuex';
+import { mapMutations } from 'vuex';
 import Modal from '@/components/Modal.vue';
 import QuizStart from '@/components/QuizStart.vue';
 import Question from '@/components/Question.vue';
@@ -105,6 +109,7 @@ export default {
 		activeQuestionTitle: "",
 		activeQuestionAnswers: "",
 		activeSelectedAnswer: "-1",
+		progress: "0"
 	}),
 	components: {
 		Modal,
@@ -112,7 +117,7 @@ export default {
 		Question,
 	},
 	methods: {
-		...mapActions ([
+		...mapMutations ([
 			'closeModal',
 			'openModal'
 		]),
@@ -130,7 +135,9 @@ export default {
 				this.questions[activeIndex].isActive = false;
 				this.questions[prevIndex].isActive = true;
 			}
+
 			this.updateQuestionStatus();
+			this.updateProgress();
 		},
 		quizNext: function() {
 			const activeIndex = this.questions.findIndex(question => question.isActive);
@@ -140,17 +147,19 @@ export default {
 				this.questions[activeIndex].isActive = false;
 				this.questions[nextIndex].isActive = true;
 			}
+
 			this.updateQuestionStatus();
+			this.updateProgress();
 		},
 		updateQuestionStatus: function() {
 			const index = this.questions.findIndex(question => question.isActive);
 			
 			this.activeQuestion = this.questions[index];
-			this.activeQuestionNumber = index;
+			this.activeQuestionNumber = index+1;
 			this.activeQuestionTitle = this.activeQuestion.title;
 			this.activeQuestionAnswers = this.activeQuestion.answers;
 			this.activeSelectedAnswer = this.activeQuestion.selectedAnswer;
- 
+
 			console.table(this.questions);
 		},
 		updateSelectedAnswer: function(newAnswer) {
@@ -164,6 +173,25 @@ export default {
 			for (let i = 0; i < questions.length; i++) {
 				questions[i].questionId = i;
 			}
+		},
+		updateProgress: function() {
+			const progressBar = document.querySelector('.js-progress');
+			const questions = this.questions;
+			const questionsAmount = this.questions.length;
+			let progress = this.progress;
+			let answeredAmount = [];
+
+			function calculateAnsweredAmount() {
+				for (let i in questions) {
+					if (questions[i].selectedAnswer) {
+						answeredAmount.push(questions[i]);
+					}
+				}
+			}
+
+			calculateAnsweredAmount();
+			progress = answeredAmount.length / questionsAmount * 100;
+			progressBar.style.transform = "translateX(" + progress + "%)";
 		}
 	},
 	computed: {
@@ -208,9 +236,31 @@ export default {
 	margin-top: 40px; 
 	display: flex; 
 	justify-content: center;
-
 	.btn + .btn {
 		margin-left: 20px; 
+	}
+}
+
+.progress {
+	.bar-progress {
+		position: relative;
+		margin-top: 16px; 
+		height: 4px;
+		background-color: #E2E7FE; 
+		border-radius: 100px;
+		overflow: hidden; 
+
+		.bar__inner {
+			position: absolute; 
+			right: 100%;
+			width: 100%; 
+			top: 0;
+			bottom: 0;
+			transform: translateX(0%); 
+			background-color: #2049E6;
+			border-radius: 100px;
+			transition: transform .3s ease-out;
+		}
 	}
 }
 
