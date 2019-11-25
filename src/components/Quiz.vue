@@ -101,8 +101,9 @@ export default {
 		quizQuestions: false,
 		questions: [],
 		activeQuestion: "",
-		activeQuestionAnswers: "",
+		activeQuestionNumber: "",
 		activeQuestionTitle: "",
+		activeQuestionAnswers: "",
 		activeSelectedAnswer: "-1",
 	}),
 	components: {
@@ -145,6 +146,7 @@ export default {
 			const index = this.questions.findIndex(question => question.isActive);
 			
 			this.activeQuestion = this.questions[index];
+			this.activeQuestionNumber = index;
 			this.activeQuestionTitle = this.activeQuestion.title;
 			this.activeQuestionAnswers = this.activeQuestion.answers;
 			this.activeSelectedAnswer = this.activeQuestion.selectedAnswer;

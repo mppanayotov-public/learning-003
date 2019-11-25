@@ -5,8 +5,6 @@
 </template>
 
 <script>
-// @ is an alias to /src
-// import HelloWorld from '@/compon ents/HelloWorld.vue'
 import Quiz from '@/components/Quiz.vue'
 
 export default {
