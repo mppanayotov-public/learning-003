@@ -66,10 +66,12 @@
 			</div><!-- /.quiz__main -->
 		</div><!-- /.quiz__inner -->
 
-		<div class="sidebar box">
-			<div class="icon">
-				<img src="../assets/images/temp/collapse.png" alt="" width="22" height="18">
-			</div><!-- /.icon -->
+		<div class="sidebar box js-sidebar">
+			<a @click.prevent="toggleSidebar" href="#" class="sidebar__toggle js-sidebar-toggle">
+				<div class="icon">
+					<img src="../assets/images/temp/collapse.png" alt="" width="22" height="18">
+				</div><!-- /.icon -->
+			</a>
 		</div><!-- /.sidebar -->
 	</div><!-- /.quiz -->
 </template>
@@ -201,6 +203,16 @@ export default {
 					clearInterval(timerInterval);
 				}
 			}, 1000);
+		},
+		toggleSidebar: function() {
+			const sidebar = document.querySelector('.js-sidebar');
+			const sidebarToggle = document.querySelector('.js-sidebar-toggle');
+
+			if (sidebar.classList.contains('active')) {
+				sidebar.classList.remove('active');
+			} else {
+				sidebar.classList.add('active');
+			}
 		}
 	},
 	computed: {
@@ -248,12 +260,35 @@ export default {
 	}
 
 	.sidebar {
+		margin-right: -36px; 
 		margin-left: 30px; 
 		padding: 22px 20px; 
-		width: 60px; 
+		width: 100%; 
+		max-width: 60px; 
 		min-height: 72px; 
 		flex: 0 0 auto;
 		align-self: flex-start;
+		transition: max-width .3s ease-out;
+
+		.sidebar__toggle {
+			width: 20px; 
+			height: 28px; 
+			display: block; 
+
+			.icon {
+				transition: transform .3s ease-out;
+			}
+		}
+
+		&.active {
+			max-width: 251px; 
+
+			.sidebar__toggle {
+				.icon {
+					transform: scaleX(-1);
+				}
+			}
+		}
 	}
 }
 
