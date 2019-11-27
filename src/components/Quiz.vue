@@ -172,16 +172,26 @@ export default {
 		},
 		startTimer: function() {
 			const timer = document.querySelector('.js-timer');
-			const duration = 5 * 60 * 60;
+			const initialDuration = 60 * 60 * 5;
+			let timerTime = initialDuration;
+			let hours;
+			let minutes;
+			let seconds;
+		
+			const timerInterval = setInterval(function () {
+				hours = parseInt(timerTime / 3600, 10);
+				minutes = parseInt(timerTime / 60 % 60, 10);
+				seconds = parseInt(timerTime % 60, 10);
 
-			setInterval(function () {
-				let minutes = parseInt(duration / 60, 10)
-				let seconds = parseInt(duration % 60, 10);
-
+				hours = hours < 10 ? "0" + hours : hours;
 				minutes = minutes < 10 ? "0" + minutes : minutes;
 				seconds = seconds < 10 ? "0" + seconds : seconds;
 
-				timer.textContent = minutes + ":" + seconds;
+				timer.textContent = hours +  ":" + minutes + ":" + seconds;
+
+				if (--timerTime < 0) {
+					clearInterval(timerInterval);
+				}
 			}, 1000);
 		}
 	},
