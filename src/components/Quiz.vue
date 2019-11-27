@@ -4,7 +4,7 @@
 			<template v-slot:content>
 				<div class="modal-content">
 					<div class="icon">
-						<img src="../assets/lock.png" alt="" width="106" height="106">
+						<img src="../assets/images/temp/lock.png" alt="" width="106" height="106">
 					</div><!-- /.icon -->
 					
 					<h2>An access code is required to start.</h2>
@@ -24,45 +24,53 @@
 			</template>
 		</Modal>
 
-		<div class="quiz__header">
-			<div class="cols">
-				<div class="box box--big">
-					<div class="progress">
-						Assessment Progress
-
-						<div class="bar-progress">
-							<div class="bar__inner js-progress"></div><!-- /.bar__inner -->
-						</div><!-- /.bar-progress -->
-					</div><!-- /.progress -->
-				</div><!-- /.box -->
+		<div class="quiz__inner">
+			<div class="quiz__header">
+				<div class="cols">
+					<div class="box box--big">
+						<div class="progress">
+							Assessment Progress
 			
-				<div class="box">
-					<div class="timer">
-						Time Remaining
+							<div class="bar-progress">
+								<div class="bar__inner js-progress"></div><!-- /.bar__inner -->
+							</div><!-- /.bar-progress -->
+						</div><!-- /.progress -->
+					</div><!-- /.box -->
+				
+					<div class="box">
+						<div class="timer">
+							Time Remaining
+			
+							<div class="timer__time js-timer">
+								05:00:00
+							</div><!-- /.timer__time -->
+						</div><!-- /.progress -->
+					</div><!-- /.box -->
+				</div><!-- /.cols -->
+			</div><!-- /.quiz__header -->
+			
+			<div class="quiz__main">
+				<QuizStart v-if="quizStart"/>
+			
+				<div class="quiz__questions" v-if="quizQuestions">
+					<!-- Use Prop -->
+			
+					<Question v-bind:number="activeQuestionNumber" v-bind:title="activeQuestionTitle" v-bind:answers="activeQuestionAnswers" v-bind:selectedAnswer="activeSelectedAnswer" v-on:callUpdateSelectedAnswer="updateSelectedAnswer" :key="activeQuestion.questionId"></Question>
+			
+					<div class="question-controls">
+						<button class="btn" v-on:click="quizPrev">Previous question</button>
+			
+						<button class="btn" v-on:click="quizNext">Next question</button>
+					</div><!-- /.question__actions -->
+				</div><!-- /.quiz__questions -->
+			</div><!-- /.quiz__main -->
+		</div><!-- /.quiz__inner -->
 
-						<div class="timer__time js-timer">
-							05:00:00
-						</div><!-- /.timer__time -->
-					</div><!-- /.progress -->
-				</div><!-- /.box -->
-			</div><!-- /.cols -->
-		</div><!-- /.quiz__header -->
-
-		<div class="quiz__main">
-			<QuizStart v-if="quizStart"/>
-
-			<div class="quiz__questions" v-if="quizQuestions">
-				<!-- Use Prop -->
-
-				<Question v-bind:number="activeQuestionNumber" v-bind:title="activeQuestionTitle" v-bind:answers="activeQuestionAnswers" v-bind:selectedAnswer="activeSelectedAnswer" v-on:callUpdateSelectedAnswer="updateSelectedAnswer" :key="activeQuestion.questionId"></Question>
-
-				<div class="question-controls">
-					<button class="btn" v-on:click="quizPrev">Previous question</button>
-
-					<button class="btn" v-on:click="quizNext">Next question</button>
-				</div><!-- /.question__actions -->
-			</div><!-- /.quiz__questions -->
-		</div><!-- /.quiz__main -->
+		<div class="sidebar box">
+			<div class="icon">
+				<img src="../assets/images/temp/collapse.png" alt="" width="22" height="18">
+			</div><!-- /.icon -->
+		</div><!-- /.sidebar -->
 	</div><!-- /.quiz -->
 </template>
 
@@ -221,8 +229,15 @@ export default {
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped lang="scss">
 .quiz {
+	display: flex; 
+
+	.quiz__inner {
+		flex: 1 1 auto;
+	}
+
 	.quiz__header {
 		margin-bottom: 30px; 
+
 		.box--big {
 			flex-grow: 1;
 		}
@@ -231,12 +246,22 @@ export default {
 			margin-left: 20px; 
 		}
 	}
+
+	.sidebar {
+		margin-left: 30px; 
+		padding: 22px 20px; 
+		width: 60px; 
+		min-height: 72px; 
+		flex: 0 0 auto;
+		align-self: flex-start;
+	}
 }
 
 .question-controls {
 	margin-top: 40px; 
 	display: flex; 
 	justify-content: center;
+
 	.btn + .btn {
 		margin-left: 20px; 
 	}
