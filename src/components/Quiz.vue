@@ -55,7 +55,18 @@
 				<div class="quiz__questions" v-if="quizQuestions">
 					<!-- Use Prop -->
 			
-					<Question v-bind:number="activeQuestionNumber" v-bind:title="activeQuestionTitle" v-bind:answers="activeQuestionAnswers" v-bind:selectedAnswer="activeSelectedAnswer" v-on:callUpdateSelectedAnswer="updateSelectedAnswer" :key="activeQuestion.questionId"></Question>
+					<Question 
+						v-bind:number="activeQuestionNumber"
+						v-bind:title="activeQuestionTitle"
+						v-bind:answers="activeQuestionAnswers"
+						v-bind:selectedAnswer="activeSelectedAnswer"
+						v-bind:isPinned="activeQuestionPinned"
+						v-on:callUpdateSelectedAnswer="updateSelectedAnswer"
+						v-on:callUpdatePinned="updatePinned"
+						:key="activeQuestion.questionId" 
+						class="box"
+					>
+					</Question>
 			
 					<div class="question-controls">
 						<button class="btn" v-on:click="quizPrev">Previous question</button>
@@ -72,6 +83,18 @@
 					<img src="../assets/images/temp/collapse.png" alt="" width="22" height="18">
 				</div><!-- /.icon -->
 			</a>
+
+			<div class="sidebar__inner">
+				<ul class="list-questions">
+					<li v-for="question, index in questions">
+						<span class="list__number">{{index+1}}</span>
+
+						<span v-if="question.selectedAnswer > -1" class="answered">&check;</span>
+
+						<span v-if="question.isPinned" class="pinned"><img src="../assets/images/temp/tack-small.png" alt="" width="19" height="19"></span>
+					</li>
+				</ul><!-- /.list-questions -->
+			</div><!-- /.sidebar__inner -->
 		</div><!-- /.sidebar -->
 	</div><!-- /.quiz -->
 </template>
@@ -94,6 +117,7 @@ export default {
 		activeQuestionNumber: "",
 		activeQuestionTitle: "",
 		activeQuestionAnswers: "",
+		activeQuestionPinned: false,
 		activeSelectedAnswer: "-1",
 		progress: "0"
 	}),
@@ -146,11 +170,25 @@ export default {
 			this.activeQuestionTitle = this.activeQuestion.title;
 			this.activeQuestionAnswers = this.activeQuestion.answers;
 			this.activeSelectedAnswer = this.activeQuestion.selectedAnswer;
+			this.activeQuestionPinned = this.activeQuestion.isPinned;
 
 			console.table(this.questions);
 		},
 		updateSelectedAnswer: function(newAnswer) {
 			this.activeQuestion.selectedAnswer = newAnswer;
+
+			this.updateQuestionStatus();
+			this.updateProgress();
+		},
+		updatePinned: function() {
+			if (!this.activeQuestion.isPinned) {
+				this.activeQuestion.isPinned = true;
+			} else {
+				this.activeQuestion.isPinned = false;
+			}
+
+			this.updateQuestionStatus();
+			this.updateProgress();
 		},
 		updateQuestionsData: function() {
 			const questions = this.questions;
@@ -280,6 +318,11 @@ export default {
 			}
 		}
 
+		.sidebar__inner {
+			width: 211px; 
+			display: none; 
+		}
+
 		&.active {
 			max-width: 251px; 
 
@@ -288,7 +331,61 @@ export default {
 					transform: scaleX(-1);
 				}
 			}
+
+			.sidebar__inner {
+				display: block; 
+			}
 		}
+	}
+}
+
+.list-questions {
+	margin: -13px;
+	display: flex; 
+	flex-wrap: wrap;
+	justify-content: space-between;
+
+	li {
+		position: relative; 
+		margin: 13px; 
+		margin-bottom: 30px; 
+		width: 33px; 
+		height: 33px; 
+		box-shadow: 0 0 0 1px #979797 inset;
+		border-radius: 50%;
+		flex: 0 0 auto;
+	}
+
+	.list__number {
+		position: absolute; 
+		top: 100%; 
+		left: 0; 
+		right: 0; 
+		margin-top: 10px; 
+		text-align: center; 
+	}
+
+	.answered {
+		position: absolute; 
+		top: 0; 
+		left: 0; 
+		right: 0; 
+		bottom: 0; 
+		border-radius: 50%;
+		background-color: #fff; 
+		background-color: #1fc9ff; 
+		text-align: center; 
+		line-height: 1; 
+		display: flex; 
+		justify-content: center;
+		align-items: center;
+		color: #fff;
+	}
+
+	.pinned {
+		position: absolute; 
+		bottom: 0; 
+		right: 0; 
 	}
 }
 
